@@ -237,22 +237,3 @@ class BoundingBoxSpec extends Specification {
   }
 
 }
-
-object BoundingBoxSpec {
-
-  private val comparePythagorus = new Comparator[BoundingBox]() {
-    override def compare(o1: BoundingBox, o2: BoundingBox): Int =
-      JDouble.compare(o1.center.distanceTo(Point.ORIGIN), o2.center.distanceTo(Point.ORIGIN))
-  }
-
-  private val comparePythagorusSquared = new Comparator[BoundingBox]() {
-    override def compare(o1: BoundingBox, o2: BoundingBox): Int =
-      JDouble.compare(o1.center.squaredDistanceTo(Point.ORIGIN), o2.center.squaredDistanceTo(Point.ORIGIN))
-  }
-
-  private val compareApproximate = new Comparator[BoundingBox]() {
-    override def compare(o1: BoundingBox, o2: BoundingBox): Int =
-      JDouble.compare(o1.center.approximateDistanceTo(Point.ORIGIN), o2.center.approximateDistanceTo(Point.ORIGIN))
-  }
-
-}

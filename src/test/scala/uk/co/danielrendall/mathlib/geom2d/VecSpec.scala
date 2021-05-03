@@ -1,8 +1,11 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import org.specs2.mutable.Specification
+import uk.co.danielrendall.mathlib.{ApproxMatchers, UsesDefaultEpsilon}
 
-class VecSpec extends Specification with ApproxMatchers {
+class VecSpec extends Specification
+  with ApproxMatchers
+  with UsesDefaultEpsilon {
 
   "Vec.length" should {
     "Work #1" in {

@@ -1,7 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
-import uk.co.danielrendall.mathlib.geom2d.Complex.EPSILON
-import uk.co.danielrendall.mathlib.util.Mathlib
+import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
+import uk.co.danielrendall.mathlib.util.Implicits.DoubleOps
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
@@ -9,8 +9,9 @@ import uk.co.danielrendall.mathlib.util.Mathlib
  */
 final case class Complex(x: Double, y: Double) extends XY {
 
-  private val xIsZero = Math.abs(x) < EPSILON
-  private val yIsZero = Math.abs(y) < EPSILON
+  private def xIsZero(implicit epsilon: Epsilon): Boolean = x ~== 0.0d
+
+  private def yIsZero(implicit epsilon: Epsilon) = y ~== 0.0d
 
   def neg = new Complex(0.0d - x, 0.0d - y)
 
@@ -18,11 +19,14 @@ final case class Complex(x: Double, y: Double) extends XY {
 
   def sub(other: Complex): Complex = add(other.neg)
 
-  def mod: Double = if (xIsZero && yIsZero) 0.0 else Mathlib.pythagorus(x, y)
+  def mod(implicit epsilon: Epsilon): Double =
+    if (xIsZero && yIsZero) 0.0 else Mathlib.pythagorus(x, y)
 
-  def modSquared: Double = if (xIsZero && yIsZero) 0.0 else Mathlib.pythagorusSquared(x, y)
+  def modSquared(implicit epsilon: Epsilon): Double =
+    if (xIsZero && yIsZero) 0.0 else Mathlib.pythagorusSquared(x, y)
 
-  def arg: Double = if (xIsZero && yIsZero) 0.0d else Math.atan2(y, x)
+  def arg(implicit epsilon: Epsilon): Double =
+    if (xIsZero && yIsZero) 0.0d else Math.atan2(y, x)
 
   def times(m: Double) = new Complex(x * m, y * m)
 
@@ -35,10 +39,12 @@ final case class Complex(x: Double, y: Double) extends XY {
 
   override def toString: String = String.format("(%s + %si)", x, y)
 
+  def ~==(other: Complex)
+         (implicit epsilon: Epsilon): Boolean = (x ~== other.x) && (y ~== other.y)
+
 }
 
 object Complex {
-  private val EPSILON = Double.MinValue * 100
 
   def unit: Complex = unit(1.0d)
 

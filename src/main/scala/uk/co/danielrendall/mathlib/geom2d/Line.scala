@@ -1,5 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
+import uk.co.danielrendall.mathlib.util.Epsilon
+
 /**
  * @author Daniel Rendall <drendall@gmail.com>
  * @created 23-May-2009 11:07:08
@@ -8,9 +10,9 @@ case class Line(start: Point, end: Point) extends ParametricCurve {
 
   lazy val vec: Vec = Vec(start, end)
 
-  def length: Double = vec.length
+  def length(implicit epsilon: Epsilon): Double = vec.length
 
-  def lengthSquared: Double = vec.lengthSquared
+  def lengthSquared(implicit epsilon: Epsilon): Double = vec.lengthSquared
 
   def approximateLength: Double = vec.approximateLength
 

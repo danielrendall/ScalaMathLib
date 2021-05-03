@@ -1,19 +1,20 @@
 package uk.co.danielrendall.mathlib.geom2d
 
-import uk.co.danielrendall.mathlib.util.Mathlib
+import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
  * @since 23-May-2009 10:51:28
  */
 case class Vec private (rep: Complex) extends XY {
+
   override def x: Double = rep.x
 
   override def y: Double = rep.y
 
-  def length: Double = rep.mod
+  def length(implicit epsilon: Epsilon): Double = rep.mod
 
-  def lengthSquared: Double = rep.modSquared
+  def lengthSquared(implicit epsilon: Epsilon): Double = rep.modSquared
 
   def approximateLength: Double = {
     val absX = Math.abs(x)
@@ -30,7 +31,7 @@ case class Vec private (rep: Complex) extends XY {
     }
   }
 
-  def angle: Double = rep.arg
+  def angle(implicit epsilon: Epsilon): Double = rep.arg
 
   def add(other: Vec) = Vec(rep.add(other.rep))
 
@@ -58,7 +59,7 @@ case class Vec private (rep: Complex) extends XY {
     String.format("(" + format + ", " + format + ")", rep.x, rep.y)
   }
 
-  def normalize = Vec(Complex.unit(rep.arg))
+  def normalize(implicit epsilon: Epsilon) = Vec(Complex.unit(rep.arg))
 
   def dotProduct(other: Vec): Double = x * other.x + y * other.y
 

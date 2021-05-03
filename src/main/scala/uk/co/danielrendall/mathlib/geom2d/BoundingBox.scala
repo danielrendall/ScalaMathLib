@@ -1,6 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d
 
-import uk.co.danielrendall.mathlib.util.Mathlib
+import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
@@ -28,9 +28,11 @@ case class BoundingBox private (minX: Double, maxX: Double, minY: Double, maxY: 
     Point(x, y)
   }
 
-  def centerDistanceTo(other: BoundingBox): Double = center.distanceTo(other.center)
+  def centerDistanceTo(other: BoundingBox)
+                      (implicit epsilon: Epsilon): Double = center.distanceTo(other.center)
 
-  def squaredCenterDistanceTo(other: BoundingBox): Double = center.squaredDistanceTo(other.center)
+  def squaredCenterDistanceTo(other: BoundingBox)
+                             (implicit epsilon: Epsilon): Double = center.squaredDistanceTo(other.center)
 
   def forSvg: String = String.format("%5.1f %5.1f %5.1f %5.1f", minX, minY, maxX, maxY)
 

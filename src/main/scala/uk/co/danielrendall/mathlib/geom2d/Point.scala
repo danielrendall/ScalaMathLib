@@ -1,6 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import uk.co.danielrendall.mathlib.geom2d.Compass.Compass
+import uk.co.danielrendall.mathlib.util.Epsilon
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
@@ -24,15 +25,17 @@ case class Point private (rep: Complex) extends XY {
 
   override def toString: String = String.format("(%s, %s)", rep.x, rep.y)
 
-  def distanceTo(other: Point): Double = line(other).length
+  def distanceTo(other: Point)
+                (implicit epsilon: Epsilon): Double = line(other).length
 
-  def squaredDistanceTo(other: Point): Double = line(other).lengthSquared
+  def squaredDistanceTo(other: Point)
+                       (implicit epsilon: Epsilon): Double = line(other).lengthSquared
 
   def approximateDistanceTo(other: Point): Double = line(other).approximateLength
 
   def isOrigin: Boolean = ORIGIN == this
 
-  def getOctant: Compass = {
+  def getOctant(implicit epsilon: Epsilon): Compass = {
     if (isOrigin) return Compass.CENTER
     val angle = rep.arg
     if (angle < OCT1) return Compass.W
@@ -46,7 +49,7 @@ case class Point private (rep: Complex) extends XY {
     Compass.W
   }
 
-  def getQuadrant: Compass = {
+  def getQuadrant(implicit epsilon: Epsilon): Compass = {
     if (isOrigin) return Compass.CENTER
     if (rep.x == 0.0d) return if (rep.y > 0.0d) Compass.N
     else Compass.S

@@ -1,8 +1,11 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import org.specs2.mutable.Specification
+import uk.co.danielrendall.mathlib.{ApproxMatchers, UsesDefaultEpsilon}
 
-class ComplexSpec extends Specification with ApproxMatchers {
+class ComplexSpec extends Specification
+  with ApproxMatchers
+  with UsesDefaultEpsilon {
 
   "Complex" should {
     "Assign X and Y" in {

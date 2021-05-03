@@ -1,12 +1,10 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import org.specs2.mutable.Specification
+import uk.co.danielrendall.mathlib.UsesDefaultEpsilon
 
-/**
- * <Insert Description Here>
- *
- */
-class PointSpec extends Specification {
+class PointSpec extends Specification
+  with UsesDefaultEpsilon {
 
 
   "Point.getQuadrant" should {
@@ -28,7 +26,7 @@ class PointSpec extends Specification {
     "Work for N" in {
       Point(0.0d, 7.5d).getQuadrant must_=== Compass.N
     }
-   }
+  }
 
   "Point.getOctant" should {
     "Work for NW" in {
