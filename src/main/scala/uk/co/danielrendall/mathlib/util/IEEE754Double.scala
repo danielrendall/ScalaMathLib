@@ -4,6 +4,31 @@ import uk.co.danielrendall.mathlib.util.IEEE754Double.{EXP_BIAS, SIGNIF_BIT_MASK
 
 case class IEEE754Double(sign: Boolean, frac: Long, exp: Short) {
 
+  private val significantBitsToCompare = 30
+
+  def ~==(other: IEEE754Double): Boolean = {
+    if (sign != other.sign) {
+      false
+    } else if (exp + 1 == other.exp) {
+      ~==(other.decreaseExponentBy1)
+    } else if (exp - 1 == other.exp) {
+      decreaseExponentBy1.~==(other)
+    } else if (exp == other.exp) {
+      val bits = java.lang.Long.numberOfLeadingZeros(frac)
+
+      if (bits < significantBitsToCompare) {
+        frac == other.frac
+      } else {
+        (frac >> (bits - significantBitsToCompare)) == (other.frac >> (bits - significantBitsToCompare))
+      }
+
+    } else {
+      false
+    }
+  }
+
+  private def decreaseExponentBy1: IEEE754Double = IEEE754Double(sign, frac << 1, (exp - 1).toShort)
+
   def toDouble: Double = {
     val signBits = if (sign) 0 else SIGN_BIT_MASK
     val expBits = (exp + EXP_BIAS).toLong << 52

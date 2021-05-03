@@ -9,4 +9,12 @@ class IEEE754DoubleProps extends Properties("IEEE754Double") {
     IEEE754Double(d).toDouble == d
   }
 
+  property("reflexive equality") = forAll { (d: Double) =>
+    IEEE754Double(d) ~== IEEE754Double(d)
+  }
+
+  property("near equality") = forAll { (d: Double) =>
+    IEEE754Double(d) ~== IEEE754Double(d + java.lang.Double.MIN_VALUE)
+  }
+
 }
