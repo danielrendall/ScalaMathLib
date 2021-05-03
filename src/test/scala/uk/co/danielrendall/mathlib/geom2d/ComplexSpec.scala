@@ -1,13 +1,8 @@
 package uk.co.danielrendall.mathlib.geom2d
 
-import org.specs2.matcher.Matcher
 import org.specs2.mutable.Specification
 
-class ComplexSpec extends Specification {
-
-  private val DELTA: Double = 10e-10
-
-  def beApproximately(d: Double): Matcher[Double] = beCloseTo[Double](d, DELTA)
+class ComplexSpec extends Specification with ApproxMatchers {
 
   "Complex" should {
     "Assign X and Y" in {
