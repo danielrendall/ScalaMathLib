@@ -52,19 +52,4 @@ class VecSpec extends Specification with ApproxMatchers {
     }
   }
 
-  "Vector.approximateLength" should {
-    "Work" in {
-      // Not sure what this was supposed to do!
-      val increment = Math.PI / 180
-      val base = Vec(100.0d, 0.0d)
-      for (i <- 0 until 180) {
-        val test = base.rotate(increment * i.toDouble)
-        val length = test.length
-        val approx = test.approximateLength
-        System.out.println("Angle: " + i + " length " + length + " approx " + approx + " diff " + (length - approx))
-      }
-      true must beTrue
-    }
-  }
-
 }
