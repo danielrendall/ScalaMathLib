@@ -1,9 +1,12 @@
 import Dependencies._
 
 ThisBuild / scalaVersion     := "2.13.4"
-ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "uk.co.danielrendall"
 ThisBuild / organizationName := "scalamathlib"
+
+githubOwner := "danielrendall"
+githubRepository := "ScalaMathLib"
+githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 
 lazy val root = (project in file("."))
   .settings(
