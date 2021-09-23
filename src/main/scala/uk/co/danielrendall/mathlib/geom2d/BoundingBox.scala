@@ -1,5 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d
 
+import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 
 /**
@@ -34,7 +35,7 @@ case class BoundingBox private (minX: Double, maxX: Double, minY: Double, maxY: 
   def squaredCenterDistanceTo(other: BoundingBox)
                              (implicit epsilon: Epsilon): Double = center.squaredDistanceTo(other.center)
 
-  def forSvg: String = String.format("%5.1f %5.1f %5.1f %5.1f", minX, minY, maxX, maxY)
+  def forSvg: String = String.format("%5.1f %5.1f %5.1f %5.1f", box(minX), box(minY), box(maxX), box(maxY))
 
   def expandToInclude(other: BoundingBox): BoundingBox = {
     if (contains(other)) return this
@@ -46,7 +47,8 @@ case class BoundingBox private (minX: Double, maxX: Double, minY: Double, maxY: 
     new BoundingBox(newMinX, newMaxX, newMinY, newMaxY)
   }
 
-  override def toString: String = String.format("{minX=%5.4f, maxX=%5.4f, minY=%5.4f, maxY=%5.4f, width=%5.4f, height=%5.4f'}'", minX, maxX, minY, maxY, getWidth, getHeight)
+  override def toString: String = String.format("{minX=%5.4f, maxX=%5.4f, minY=%5.4f, maxY=%5.4f, width=%5.4f, height=%5.4f'}'",
+    box(minX), box(maxX), box(minY), box(maxY), box(getWidth), box(getHeight))
 
 }
 

@@ -1,5 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d
 
+import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 import uk.co.danielrendall.mathlib.util.Implicits.DoubleOps
 
@@ -37,7 +38,7 @@ final case class Complex(x: Double, y: Double) extends XY {
 
   def rotate(angle: Double): Complex = times(Complex.unit(angle))
 
-  override def toString: String = String.format("(%s + %si)", x, y)
+  override def toString: String = String.format("(%s + %si)", box(x), box(y))
 
   def ~==(other: Complex)
          (implicit epsilon: Epsilon): Boolean = (x ~== other.x) && (y ~== other.y)

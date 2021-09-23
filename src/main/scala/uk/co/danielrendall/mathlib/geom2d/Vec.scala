@@ -1,5 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d
 
+import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 
 /**
@@ -56,7 +57,7 @@ case class Vec private (rep: Complex) extends XY {
 
   def toString(whole: Int, decimal: Int): String = {
     val format = "%" + whole + "." + decimal + "f"
-    String.format("(" + format + ", " + format + ")", rep.x, rep.y)
+    String.format("(" + format + ", " + format + ")", box(rep.x), box(rep.y))
   }
 
   def normalize(implicit epsilon: Epsilon) = Vec(Complex.unit(rep.arg))

@@ -1,5 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d
 
+import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.geom2d.Compass.Compass
 import uk.co.danielrendall.mathlib.util.Epsilon
 
@@ -23,7 +24,7 @@ case class Point private (rep: Complex) extends XY {
 
   def line(vec: Vec) = Line(this, vec)
 
-  override def toString: String = String.format("(%s, %s)", rep.x, rep.y)
+  override def toString: String = String.format("(%s, %s)", box(rep.x), box(rep.y))
 
   def distanceTo(other: Point)
                 (implicit epsilon: Epsilon): Double = line(other).length
