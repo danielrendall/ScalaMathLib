@@ -10,4 +10,9 @@ object Implicits {
 
   }
 
+  implicit class RadOps(rad: Rad) {
+    def ~==(other: Rad)
+           (implicit epsilon: Epsilon): Boolean = rad.angle ~== other.angle
+  }
+
 }
