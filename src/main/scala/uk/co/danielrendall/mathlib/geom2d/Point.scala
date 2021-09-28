@@ -2,7 +2,7 @@ package uk.co.danielrendall.mathlib.geom2d
 
 import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.geom2d.Compass.Compass
-import uk.co.danielrendall.mathlib.util.Epsilon
+import uk.co.danielrendall.mathlib.util.{Epsilon, Rad}
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
@@ -18,7 +18,7 @@ case class Point private (rep: Complex) extends XY {
 
   def displace(vec: Vec): Point = Point(rep.add(vec.rep))
 
-  def rotate(angle: Double): Point = Point(rep.rotate(angle))
+  def rotate(angle: Rad): Point = Point(rep.rotate(angle))
 
   def line(other: Point) = Line(this, other)
 

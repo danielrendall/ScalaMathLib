@@ -1,7 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import uk.co.danielrendall.mathlib.Compat.box
-import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
+import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib, Rad}
 
 /**
  * @author Daniel Rendall <drendall@gmail.com>
@@ -40,7 +40,7 @@ case class Vec private (rep: Complex) extends XY {
 
   def neg = Vec(rep.neg)
 
-  def rotate(angle: Double) = Vec(rep.rotate(angle))
+  def rotate(angle: Rad) = Vec(rep.rotate(angle))
 
   def scale(factor: Double) = Vec(rep.times(factor))
 
@@ -49,9 +49,9 @@ case class Vec private (rep: Complex) extends XY {
     scale(1.0d / factor)
   }
 
-  def scaleAndRotate(factor: Double, angle: Double) = Vec(rep.times(Complex.modArg(factor, angle)))
+  def scaleAndRotate(factor: Double, angle: Rad) = Vec(rep.times(Complex.modArg(factor, angle)))
 
-  def shrinkAndRotate(factor: Double, angle: Double): Vec = scaleAndRotate(1.0d / factor, angle)
+  def shrinkAndRotate(factor: Double, angle: Rad): Vec = scaleAndRotate(1.0d / factor, angle)
 
   override def toString: String = toString(5, 3)
 
