@@ -38,6 +38,11 @@ final case class Complex(x: Double, y: Double) extends XY {
 
   def rotate(angle: Rad): Complex = times(angle.toComplex)
 
+  def rotate(angle: Rad, about: Complex): Complex =
+    if (about.equals(Complex.zero)) times(angle.toComplex) else {
+      sub(about).rotate(angle).add(about)
+    }
+
   override def toString: String = String.format("(%s + %si)", box(x), box(y))
 
   def ~==(other: Complex)
@@ -47,7 +52,9 @@ final case class Complex(x: Double, y: Double) extends XY {
 
 object Complex {
 
-  def unit: Complex = unit(1.0d)
+  val unit: Complex = unit(1.0d)
+
+  val zero: Complex = Complex(0.0d, 0.0d)
 
   def unit(arg: Double): Complex = modArg(1.0d, arg)
 

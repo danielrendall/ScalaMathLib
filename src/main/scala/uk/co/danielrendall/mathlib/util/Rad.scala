@@ -21,6 +21,8 @@ object Rad {
 
   val TWO_PI: Double = 2.0d * Math.PI
 
+  val zero: Rad = Rad(0.0d)
+
   def apply(angle: Double): Rad = new Rad(mod2Pi(angle))
 
   def mod2Pi(v: Double): Double = if (v >= 0.0d && v < TWO_PI) v else {

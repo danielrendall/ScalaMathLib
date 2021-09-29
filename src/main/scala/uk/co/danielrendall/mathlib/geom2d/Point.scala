@@ -20,6 +20,8 @@ case class Point private (rep: Complex) extends XY {
 
   def rotate(angle: Rad): Point = Point(rep.rotate(angle))
 
+  def rotate(angle: Rad, about: Point): Point = Point(rep.rotate(angle, about.rep))
+
   def line(other: Point) = Line(this, other)
 
   def line(vec: Vec) = Line(this, vec)
