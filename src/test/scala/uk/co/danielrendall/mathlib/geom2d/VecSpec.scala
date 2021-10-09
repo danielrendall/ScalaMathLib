@@ -9,13 +9,13 @@ class VecSpec extends Specification
 
   "Vec.length" should {
     "Work #1" in {
-      Vec(Point(7, 0)).length must beApproximately(7.0d)
+      Vec(Point(7, 0)).length must be_~==(7.0d)
     }
     "Work #2" in {
-      Vec(Point(0, -6.543)).length must beApproximately(6.543d)
+      Vec(Point(0, -6.543)).length must be_~==(6.543d)
     }
     "Work #3" in {
-      Vec(Point(-5.0, 12.0)).length must beApproximately(13.0d)
+      Vec(Point(-5.0, 12.0)).length must be_~==(13.0d)
     }
   }
 
@@ -31,8 +31,8 @@ class VecSpec extends Specification
     "Work" in {
       val vec1 = Vec(Point(4, 4))
       val vec2 = vec1.normalize
-      vec2.length must beApproximately(1.0d)
-      vec2.angle must beApproximately(Math.PI / 4.0)
+      vec2.length must be_~==(1.0d)
+      vec2.angle must be_~==(Math.PI / 4.0)
     }
   }
 
@@ -40,18 +40,18 @@ class VecSpec extends Specification
     "Work" in {
       val vec1 = Vec(Point(7, 4))
       val vec2 = Vec(Point(2, 3))
-      vec1.dotProduct(vec2) must beApproximately(26.0)
-      vec2.dotProduct(vec1) must beApproximately(26.0)
+      vec1.dotProduct(vec2) must be_~==(26.0)
+      vec2.dotProduct(vec1) must be_~==(26.0)
     }
     "Work after normalizing" in {
       val vec1 = Vec(Point(-3, 4))
       val vec2 = Vec(Point(2, 3))
       val angleBetween = vec1.angle - vec2.angle
       val cosAngle = Math.cos(angleBetween)
-      vec1.normalize.dotProduct(vec2.normalize) must beApproximately(cosAngle)
-      vec2.normalize.dotProduct(vec1.normalize) must beApproximately(cosAngle)
-      vec1.normalize.dotProduct(vec1) must beApproximately(vec1.length)
-      vec2.normalize.dotProduct(vec2) must beApproximately(vec2.length)
+      vec1.normalize.dotProduct(vec2.normalize) must be_~==(cosAngle)
+      vec2.normalize.dotProduct(vec1.normalize) must be_~==(cosAngle)
+      vec1.normalize.dotProduct(vec1) must be_~==(vec1.length)
+      vec2.normalize.dotProduct(vec2) must be_~==(vec2.length)
     }
   }
 

@@ -4,12 +4,9 @@ import org.specs2.mutable.Specification
 import uk.co.danielrendall.mathlib.util.Implicits.RadOps
 import epsilon.Default
 import org.specs2.specification.core.Fragments
+import uk.co.danielrendall.mathlib.ApproxMatchers
 
-/**
- * <Insert Description Here>
- *
- */
-class RadSpec extends Specification {
+class RadSpec extends Specification with ApproxMatchers {
 
   "Rad" should {
     Fragments(
@@ -27,16 +24,16 @@ class RadSpec extends Specification {
       ).flatMap { trip =>
         Seq(
           s"${trip.a} + ${trip.b} = ${trip.c}" in {
-            (Rad(trip.a) + Rad(trip.b) ~== Rad(trip.c)) must beTrue
+            (Rad(trip.a) + Rad(trip.b) must be_~==(Rad(trip.c)))
           },
           s"${trip.b} + ${trip.a} = ${trip.c}" in {
-            (Rad(trip.b) + Rad(trip.a) ~== Rad(trip.c)) must beTrue
+            (Rad(trip.b) + Rad(trip.a) must be_~==(Rad(trip.c)))
           },
           s"${trip.c} - ${trip.b} = ${trip.a}" in {
-            (Rad(trip.c) - Rad(trip.b) ~== Rad(trip.a)) must beTrue
+            (Rad(trip.c) - Rad(trip.b) must be_~==(Rad(trip.a)))
           },
           s"${trip.c} - ${trip.a} = ${trip.b}" in {
-            (Rad(trip.c) - Rad(trip.a) ~== Rad(trip.b)) must beTrue
+            (Rad(trip.c) - Rad(trip.a) must be_~==(Rad(trip.b)))
           }
         )
       }:_*
