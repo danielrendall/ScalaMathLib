@@ -32,4 +32,22 @@ class PolygonSpec extends Specification with ApproxMatchers {
 
   }
 
+  "Polygon.evaluate" should {
+    val aSquare = Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0), Point(0.0, 1.0))
+
+    "Work for a square" in {
+      aSquare.evaluate(0.0) must be_~==(Point.ORIGIN)
+      aSquare.evaluate(0.125) must be_~==(Point(0.5, 0.0))
+      aSquare.evaluate(0.25) must be_~==(Point(1.0, 0.0))
+      aSquare.evaluate(0.375) must be_~==(Point(1.0, 0.5))
+      aSquare.evaluate(0.5) must be_~==(Point(1.0, 1.0))
+      aSquare.evaluate(0.625) must be_~==(Point(0.5, 1.0))
+      aSquare.evaluate(0.75) must be_~==(Point(0.0, 1.0))
+      aSquare.evaluate(0.875) must be_~==(Point(0.0, 0.5))
+      aSquare.evaluate(1.0) must be_~==(Point.ORIGIN)
+    }
+
+
+  }
+
 }

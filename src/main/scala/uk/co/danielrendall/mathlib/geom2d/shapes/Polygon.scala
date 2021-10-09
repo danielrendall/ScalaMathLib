@@ -1,5 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d.shapes
 
+import uk.co.danielrendall.mathlib.geom2d.shapes.Polygon.ParamLine
 import uk.co.danielrendall.mathlib.geom2d.{BoundingBox, Line, Point, Vec}
 import uk.co.danielrendall.mathlib.util.Rad
 import uk.co.danielrendall.mathlib.util.epsilon.Default
@@ -16,13 +17,21 @@ case class Polygon(points: Seq[Point]) extends Shape[Polygon] {
   override def translate(vec: Vec): Shape[Polygon] =
     copy(points = points.map(_.displace(vec)))
 
-  override def evaluate(parameter: Double): Point = rangesAndLines.find(x => x._1 <= parameter) match {
-    case Some((start, end, line)) =>
-      line.evaluate((parameter - start) * (end - start))
-
-    case None =>
-      // should never happen...
-      throw new IllegalArgumentException("Bad parameter: " + parameter)
+  override def evaluate(parameter: Double): Point = {
+    @tailrec
+    def find(last: ParamLine, remaining: Seq[ParamLine]): ParamLine = {
+      remaining.headOption match {
+        case Some(head) if head.start <= parameter =>
+          find(head, remaining.tail)
+        case _ => last
+      }
+    }
+    paramLines.headOption.map(head => find(head, paramLines.tail)) match {
+      case Some(line) =>
+        line.line.evaluate((parameter - line.start) / (line.end - line.start))
+      case None =>
+        throw new IllegalArgumentException("Bad parameter: " + parameter)
+    }
   }
 
   override def getBoundingBox: BoundingBox =
@@ -46,12 +55,13 @@ case class Polygon(points: Seq[Point]) extends Shape[Polygon] {
     }
   }
 
-  lazy val rangesAndLines: Seq[(Double, Double, Line)] = {
-    def generate(total: Double, remaining: Seq[Line], accum: List[(Double, Double, Line)]): List[(Double, Double, Line)] =
+  lazy val paramLines: Seq[ParamLine] = {
+    @tailrec
+    def generate(total: Double, remaining: Seq[Line], accum: List[ParamLine]): List[ParamLine] =
       remaining.headOption match {
         case Some(line) =>
           val newTotal = total + line.length
-          generate(newTotal, remaining.tail, (total, newTotal, line) :: accum)
+          generate(newTotal, remaining.tail, ParamLine(total / perimeter, newTotal / perimeter, line) :: accum)
         case None =>
           accum.reverse
       }
@@ -61,6 +71,12 @@ case class Polygon(points: Seq[Point]) extends Shape[Polygon] {
 }
 
 object Polygon {
+
+  case class ParamLine(start: Double, end: Double, line: Line) {
+    assert(0 <= start && start <= 1.0, s"Start was $start")
+    assert(0 <= end && end <= 1.0, s"End was $end")
+    assert(start < end)
+  }
 
   def apply(point: Point, points: Point*): Polygon = Polygon(point +: points)
 
