@@ -11,10 +11,10 @@ case class Polygon(points: Seq[Point]) extends Shape[Polygon] {
 
   override lazy val perimeter: Double = lines.map(_.length).sum
 
-  override def rotate(angle: Rad, about: Point): Shape[Polygon] =
+  override def rotate(angle: Rad, about: Point): Polygon =
     copy(points = points.map(_.rotate(angle, about)))
 
-  override def translate(vec: Vec): Shape[Polygon] =
+  override def translate(vec: Vec): Polygon =
     copy(points = points.map(_.displace(vec)))
 
   override def evaluate(parameter: Double): Point = {

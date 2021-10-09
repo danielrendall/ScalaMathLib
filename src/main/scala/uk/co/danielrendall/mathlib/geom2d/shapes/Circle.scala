@@ -7,7 +7,7 @@ case class Circle(center: Point, radius: Double, startAngle: Rad = Rad.ZERO) ext
 
   override def perimeter: Double = Math.PI * 2.0 * radius
 
-  override def rotate(angle: Rad, about: Point): Shape[Circle] =
+  override def rotate(angle: Rad, about: Point): Circle =
     Circle(center.rotate(angle, about), radius, startAngle + angle)
 
   override def evaluate(parameter: Double): Point = {
