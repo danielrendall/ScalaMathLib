@@ -3,7 +3,7 @@ package uk.co.danielrendall.mathlib.geom2d.shapes
 import uk.co.danielrendall.mathlib.geom2d.{BoundingBox, Complex, Point, Vec}
 import uk.co.danielrendall.mathlib.util.Rad
 
-case class Circle(center: Point, radius: Double, startAngle: Rad = Rad.zero) extends Shape[Circle] {
+case class Circle(center: Point, radius: Double, startAngle: Rad = Rad.ZERO) extends Shape[Circle] {
 
   override def perimeter: Double = Math.PI * 2.0 * radius
 
@@ -11,7 +11,7 @@ case class Circle(center: Point, radius: Double, startAngle: Rad = Rad.zero) ext
     Circle(center.rotate(angle, about), radius, startAngle + angle)
 
   override def evaluate(parameter: Double): Point = {
-    val angle = startAngle + (parameter * Rad.TWO_PI)
+    val angle: Double = startAngle + (parameter * Rad.TWO_PI)
     Point(center.rep.add((Complex.modArg(radius, angle))))
   }
 
