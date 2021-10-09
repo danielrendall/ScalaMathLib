@@ -9,6 +9,8 @@ trait Shape[T] extends ParametricCurve {
 
   def rotate(angle: Rad, about: Point): Shape[T]
 
+  def rotate(angle: Rad): Shape[T] = rotate(angle, Point.ORIGIN)
+
   def translate(vec: Vec): Shape[T]
 
 }
