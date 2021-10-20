@@ -3,6 +3,8 @@ package uk.co.danielrendall.mathlib.geom2d
 import uk.co.danielrendall.mathlib.Compat.box
 import uk.co.danielrendall.mathlib.util.{Epsilon, Mathlib}
 
+import scala.annotation.tailrec
+
 /**
  * @author Daniel Rendall <drendall@gmail.com>
  * @since 27-Jun-2009 16:41:14
@@ -57,32 +59,28 @@ object BoundingBox {
   def empty = new BoundingBox(Double.MaxValue, -Double.MaxValue, Double.MaxValue, -Double.MaxValue)
 
   def containing(points: Point*): BoundingBox = {
-    var minX = Double.MaxValue
-    var maxX = -Double.MaxValue
-    var minY = Double.MaxValue
-    var maxY = -Double.MaxValue
-    for (p <- points) {
-      minX = Math.min(minX, p.x)
-      maxX = Math.max(maxX, p.x)
-      minY = Math.min(minY, p.y)
-      maxY = Math.max(maxY, p.y)
-    }
-    BoundingBox(minX, maxX, minY, maxY)
+    @tailrec
+    def recurse(remaining: Seq[Point], minX: Double, maxX: Double, minY: Double, maxY: Double): BoundingBox =
+      remaining.headOption match {
+        case Some(p) =>
+          recurse(remaining.tail, Math.min(minX, p.x), Math.max(maxX, p.x), Math.min(minY, p.y), Math.max(maxY, p.y))
+        case None => BoundingBox(minX, maxX, minY, maxY)
+      }
+
+    recurse(points, Double.MaxValue, -Double.MaxValue, Double.MaxValue, -Double.MaxValue)
   }
 
   def containing(xValues: Array[Double], yValues: Array[Double]): BoundingBox = {
-    var minX = Double.MaxValue
-    var maxX = -Double.MaxValue
-    var minY = Double.MaxValue
-    var maxY = -Double.MaxValue
-    for (xValue <- xValues) {
-      minX = Math.min(minX, xValue)
-      maxX = Math.max(maxX, xValue)
+    @tailrec
+    def recurse(remaining: Seq[Double], min: Double, max: Double): (Double, Double) = {
+      remaining.headOption match {
+        case Some(d) =>
+          recurse(remaining.tail, Math.min(min, d), Math.max(max, d))
+        case None => (min, max)
+      }
     }
-    for (yValue <- yValues) {
-      minY = Math.min(minY, yValue)
-      maxY = Math.max(maxY, yValue)
-    }
+    val (minX, maxX) = recurse(xValues, Double.MaxValue, -Double.MaxValue)
+    val (minY, maxY) = recurse(yValues, Double.MaxValue, -Double.MaxValue)
     BoundingBox(minX, maxX, minY, maxY)
   }
 
