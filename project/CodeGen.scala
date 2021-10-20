@@ -25,6 +25,7 @@ object CodeGen {
         val ShapesPackage: ModuleSymbol = RootClass.newPackage("uk.co.danielrendall.mathlib.geom2d.shapes")
         val UtilPackage: ModuleSymbol = RootClass.newPackage("uk.co.danielrendall.mathlib.util")
         val PolyClass: ClassSymbol = RootClass.newClass(polygon.name)
+        val PolygonClass: ClassSymbol = RootClass.newClass("Polygon")
         val PointClass: ClassSymbol = RootClass.newClass("Point")
         val ShapeClass: ClassSymbol = RootClass.newClass("Shape")
         val RadClass: ClassSymbol = RootClass.newClass("Rad")
@@ -39,7 +40,9 @@ object CodeGen {
         IMPORT(sym.UtilPackage, "Rad"),
         CASECLASSDEF(sym.PolyClass)
           .withParams(params)
-          .withParents(sym.ShapeClass TYPE_OF sym.PolyClass,
+          .withParents(
+            sym.PolygonClass,
+            sym.ShapeClass TYPE_OF sym.PolyClass,
             sym.PolygonHelperClass TYPE_OF sym.PolyClass) := BLOCK(
 
           VAL("points", TYPE_SEQ(sym.PointClass))
