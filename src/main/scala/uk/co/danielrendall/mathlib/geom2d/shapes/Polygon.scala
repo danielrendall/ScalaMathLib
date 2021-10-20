@@ -6,6 +6,6 @@ trait Polygon extends Shape[Polygon]
 
 object Polygon {
 
-  def apply(point: Point, points: Point*): Polygon = new GenericPolygon(point +: points)
+  def apply(p1: Point, p2: Point, rest: Point*): Polygon = ???
 
 }
