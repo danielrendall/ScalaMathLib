@@ -2,7 +2,9 @@ package uk.co.danielrendall.mathlib.geom2d.shapes
 
 import org.specs2.mutable.Specification
 import uk.co.danielrendall.mathlib.ApproxMatchers
+import uk.co.danielrendall.mathlib.ApproxMatchers.PolygonCanBeComparedApproximately
 import uk.co.danielrendall.mathlib.geom2d.Point
+import uk.co.danielrendall.mathlib.geom2d.shapes.Polygon.SideLength
 import uk.co.danielrendall.mathlib.util.Rad
 import uk.co.danielrendall.mathlib.util.epsilon.Default
 
@@ -48,13 +50,27 @@ class PolygonSpec extends Specification with ApproxMatchers {
     }
   }
 
-  "Polygon.apply" should {
+  "Polygon.angleSubtendedBySide" should {
+    "Work for a square" in {
+      Polygon.angleSubtendedBySide(4) must be_~==(Rad.PI_BY_2)
+    }
+  }
+
+  "Polygon.apply applied to points" should {
     "Create a triangle" in {
-      Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0)) must_=== Triangle(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0))
+      Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0)) must_===
+        Triangle(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0))
     }
     "Create a hexagon" in {
       Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0), Point(0.5, 0.5), Point(0, 1.0), Point(-0.5, 0.5)) must_===
         Hexagon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0), Point(0.5, 0.5), Point(0, 1.0), Point(-0.5, 0.5))
+    }
+  }
+
+  "Polygon.apply to create a regular shape" should {
+    "Create a Square" in {
+      Polygon(4, Point(2.0, 1.0), SideLength(2)) must
+        be_~==(Polygon(Point(3.0, 2.0), Point(1.0, 2.0), Point(1.0, 0.0), Point (3.0, 0.0)))
     }
   }
 

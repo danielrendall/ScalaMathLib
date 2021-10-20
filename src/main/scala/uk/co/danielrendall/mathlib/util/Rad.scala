@@ -8,11 +8,13 @@ class Rad(val angle: Double) extends AnyVal {
 
   def -(other: Rad): Rad = Rad.apply(angle - other.angle)
 
-  def *(mult: Double): Rad = Rad.apply(angle * mult)
+  def *[T](mult: T)(implicit n: Numeric[T]): Rad = Rad.apply(angle * n.toDouble(mult))
 
-  def /(div: Double): Rad = Rad.apply(angle / div)
+  def /[T](div: T)(implicit n: Numeric[T]): Rad = Rad.apply(angle / n.toDouble(div))
 
   def toComplex: Complex = Complex.modArg(1, angle)
+
+  override def toString: String = angle + "rad"
 }
 
 object Rad {
@@ -34,6 +36,8 @@ object Rad {
   val PI_BY_2: Rad = PI / 2.0
 
   val TWO_PI_BY_3: Rad = TWO_PI / 3.0
+
+  val THREE_PI_BY_2: Rad = PI * 3.0 / 2.0
 
   val ZERO: Rad = Rad(0.0d)
 

@@ -2,9 +2,10 @@ package uk.co.danielrendall.mathlib
 
 import org.specs2.matcher.{Expectable, MatchResult, Matcher}
 import uk.co.danielrendall.mathlib.ApproxMatchers.CanBeComparedApproximately
+import uk.co.danielrendall.mathlib.geom2d.shapes.Polygon
 import uk.co.danielrendall.mathlib.geom2d.{Complex, Point}
 import uk.co.danielrendall.mathlib.util.{Epsilon, Rad}
-import uk.co.danielrendall.mathlib.util.Implicits.{DoubleOps, RadOps}
+import uk.co.danielrendall.mathlib.util.Implicits.{DoubleOps, PointOps, RadOps}
 
 trait ApproxMatchers {
 
@@ -38,6 +39,12 @@ object ApproxMatchers {
   implicit object PointCanBeComparedApproximately extends CanBeComparedApproximately[Point] {
     override def ~==(t1: Point, t2: Point)(implicit epsilon: Epsilon): Boolean =
       (t1.x ~== t2.x) && (t1.y ~== t2.y)
+  }
+
+  implicit object PolygonCanBeComparedApproximately extends CanBeComparedApproximately[Polygon] {
+    override def ~==(t1: Polygon, t2: Polygon)(implicit epsilon: Epsilon): Boolean = {
+      t1.points.size == t2.points.size && (t1.points.zip(t2.points)).forall { case (p1, p2) => p1 ~== p2 }
+    }
   }
 
 }
