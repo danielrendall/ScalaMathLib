@@ -46,8 +46,16 @@ class PolygonSpec extends Specification with ApproxMatchers {
       aSquare.evaluate(0.875) must be_~==(Point(0.0, 0.5))
       aSquare.evaluate(1.0) must be_~==(Point.ORIGIN)
     }
+  }
 
-
+  "Polygon.apply" should {
+    "Create a triangle" in {
+      Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0)) must_=== Triangle(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0))
+    }
+    "Create a hexagon" in {
+      Polygon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0), Point(0.5, 0.5), Point(0, 1.0), Point(-0.5, 0.5)) must_===
+        Hexagon(Point.ORIGIN, Point(1.0, 0.0), Point(1.0, 1.0), Point(0.5, 0.5), Point(0, 1.0), Point(-0.5, 0.5))
+    }
   }
 
 }
