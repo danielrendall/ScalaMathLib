@@ -6,6 +6,8 @@ lazy val scala213 = "2.13.6"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 ThisBuild / scalaVersion     := scala213
 ThisBuild / organization     := "uk.co.danielrendall"
 ThisBuild / organizationName := "scalamathlib"
