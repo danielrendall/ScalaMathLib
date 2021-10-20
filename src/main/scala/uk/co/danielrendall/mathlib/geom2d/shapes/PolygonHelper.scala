@@ -1,6 +1,6 @@
 package uk.co.danielrendall.mathlib.geom2d.shapes
 
-import uk.co.danielrendall.mathlib.geom2d.shapes.Polygon.ParamLine
+import uk.co.danielrendall.mathlib.geom2d.shapes.PolygonHelper.ParamLine
 import uk.co.danielrendall.mathlib.geom2d.{BoundingBox, Line, Point}
 import uk.co.danielrendall.mathlib.util.epsilon.Default
 
@@ -64,4 +64,12 @@ trait PolygonHelper[T <: Shape[T]] { self: Shape[T] =>
   }
 
 
+}
+
+object PolygonHelper {
+  case class ParamLine(start: Double, end: Double, line: Line) {
+    assert(0 <= start && start <= 1.0, s"Start was $start")
+    assert(0 <= end && end <= 1.0, s"End was $end")
+    assert(start < end)
+  }
 }
