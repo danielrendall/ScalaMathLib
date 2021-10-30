@@ -12,7 +12,7 @@ class Rad(val angle: Double) extends AnyVal {
 
   def /[T](div: T)(implicit n: Numeric[T]): Rad = Rad.apply(angle / n.toDouble(div))
 
-  def toComplex: Complex = Complex.modArg(1, angle)
+  def toUnitComplex: Complex = Complex.unit(this)
 
   override def toString: String = angle + "rad"
 }

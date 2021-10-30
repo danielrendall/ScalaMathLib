@@ -1,6 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import org.specs2.mutable.Specification
+import uk.co.danielrendall.mathlib.util.Rad
 import uk.co.danielrendall.mathlib.{ApproxMatchers, UsesDefaultEpsilon}
 
 class ComplexSpec extends Specification
@@ -17,7 +18,7 @@ class ComplexSpec extends Specification
     "Return modulus and argument" in {
       val a = Complex(4.5, 0.2)
       a.mod must be_~==(Math.sqrt(4.5 * 4.5 + 0.2 * 0.2))
-      a.arg must be_~==(Math.atan(0.2 / 4.5))
+      a.arg must be_~==(Rad(Math.atan(0.2 / 4.5)))
     }
 
     "Return the correct argument in different quadrants" in {
@@ -25,10 +26,10 @@ class ComplexSpec extends Specification
       val TR = Complex(3.0, 3.0)
       val BL = Complex(-1.5, -1.5)
       val BR = Complex(4.567, -4.567)
-      TL.arg must be_~==(3.0 * Math.PI / 4.0)
-      TR.arg must be_~==(Math.PI / 4.0)
-      BL.arg must be_~==(-3.0 * Math.PI / 4.0)
-      BR.arg must be_~==(-Math.PI / 4.0)
+      TL.arg must be_~==(Rad(3.0 * Math.PI / 4.0))
+      TR.arg must be_~==(Rad(Math.PI / 4.0))
+      BL.arg must be_~==(Rad(-3.0 * Math.PI / 4.0))
+      BR.arg must be_~==(Rad(-Math.PI / 4.0))
     }
 
     "Add correctly" in {

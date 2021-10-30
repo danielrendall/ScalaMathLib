@@ -41,15 +41,15 @@ case class Point private (rep: Complex) extends XY {
   def getOctant(implicit epsilon: Epsilon): Compass = {
     if (isOrigin) return Compass.CENTER
     val angle = rep.arg
-    if (angle < OCT1) return Compass.W
-    if (angle < OCT2) return Compass.SW
-    if (angle < OCT3) return Compass.S
-    if (angle < OCT4) return Compass.SE
-    if (angle < OCT5) return Compass.E
-    if (angle < OCT6) return Compass.NE
-    if (angle < OCT7) return Compass.N
-    if (angle < OCT8) return Compass.NW
-    Compass.W
+    if (angle < OCT1) return Compass.E
+    if (angle < OCT2) return Compass.NE
+    if (angle < OCT3) return Compass.N
+    if (angle < OCT4) return Compass.NW
+    if (angle < OCT5) return Compass.W
+    if (angle < OCT6) return Compass.SW
+    if (angle < OCT7) return Compass.S
+    if (angle < OCT8) return Compass.SE
+    Compass.E
   }
 
   def getQuadrant(implicit epsilon: Epsilon): Compass = {
@@ -59,10 +59,10 @@ case class Point private (rep: Complex) extends XY {
     else if (rep.y == 0.0d) return if (rep.x > 0.0d) Compass.E
     else Compass.W
     val angle = rep.arg
-    if (angle < QUAD1) return Compass.SW
-    if (angle < QUAD2) return Compass.SE
-    if (angle < QUAD3) return Compass.NE
-    Compass.NW
+    if (angle < Rad.PI_BY_2) return Compass.NE
+    if (angle < Rad.PI) return Compass.NW
+    if (angle < Rad.THREE_PI_BY_2) return Compass.SW
+    Compass.SE
   }
 
 }
@@ -73,19 +73,13 @@ object Point {
 
   val ORIGIN: Point = Point(0.0d, 0.0d)
 
-  private val OCT1 = -7.0d * Math.PI / 8.0d
-  private val OCT2 = -5.0d * Math.PI / 8.0d
-  private val OCT3 = -3.0d * Math.PI / 8.0d
-  private val OCT4 = -1.0d * Math.PI / 8.0d
-  private val OCT5 = 1.0d * Math.PI / 8.0d
-  private val OCT6 = 3.0d * Math.PI / 8.0d
-  private val OCT7 = 5.0d * Math.PI / 8.0d
-  private val OCT8 = 7.0d * Math.PI / 8.0d
-
-  private val QUAD1 = -Math.PI / 2.0d
-  private val QUAD2 = 0
-  private val QUAD3 = Math.PI / 2.0d
-  private val QUAD4 = Math.PI
-
+  private val OCT1: Rad = Rad(1.0d * Math.PI / 8.0d)
+  private val OCT2: Rad = Rad(3.0d * Math.PI / 8.0d)
+  private val OCT3: Rad = Rad(5.0d * Math.PI / 8.0d)
+  private val OCT4: Rad = Rad(7.0d * Math.PI / 8.0d)
+  private val OCT5: Rad = Rad(9.0d * Math.PI / 8.0d)
+  private val OCT6: Rad = Rad(11.0d * Math.PI / 8.0d)
+  private val OCT7: Rad = Rad(13.0d * Math.PI / 8.0d)
+  private val OCT8: Rad = Rad(15.0d * Math.PI / 8.0d)
 
 }

@@ -1,6 +1,7 @@
 package uk.co.danielrendall.mathlib.geom2d
 
 import org.specs2.mutable.Specification
+import uk.co.danielrendall.mathlib.util.Rad
 import uk.co.danielrendall.mathlib.{ApproxMatchers, UsesDefaultEpsilon}
 
 class VecSpec extends Specification
@@ -32,7 +33,7 @@ class VecSpec extends Specification
       val vec1 = Vec(Point(4, 4))
       val vec2 = vec1.normalize
       vec2.length must be_~==(1.0d)
-      vec2.angle must be_~==(Math.PI / 4.0)
+      vec2.angle must be_~==(Rad(Math.PI / 4.0))
     }
   }
 

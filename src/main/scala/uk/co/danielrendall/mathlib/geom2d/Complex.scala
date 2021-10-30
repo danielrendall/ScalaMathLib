@@ -26,8 +26,8 @@ final case class Complex(x: Double, y: Double) extends XY {
   def modSquared(implicit epsilon: Epsilon): Double =
     if (xIsZero && yIsZero) 0.0 else Mathlib.pythagorusSquared(x, y)
 
-  def arg(implicit epsilon: Epsilon): Double =
-    if (xIsZero && yIsZero) 0.0d else Math.atan2(y, x)
+  def arg(implicit epsilon: Epsilon): Rad =
+    if (xIsZero && yIsZero) Rad.ZERO else Rad(Math.atan2(y, x))
 
   def times(m: Double) = new Complex(x * m, y * m)
 
@@ -36,10 +36,10 @@ final case class Complex(x: Double, y: Double) extends XY {
     Complex(x * c.x - y * c.y, x * c.y + y * c.x)
   }
 
-  def rotate(angle: Rad): Complex = times(angle.toComplex)
+  def rotate(angle: Rad): Complex = times(angle.toUnitComplex)
 
   def rotate(angle: Rad, about: Complex): Complex =
-    if (about.equals(Complex.zero)) times(angle.toComplex) else {
+    if (about.equals(Complex.zero)) times(angle.toUnitComplex) else {
       sub(about).rotate(angle).add(about)
     }
 
@@ -52,13 +52,15 @@ final case class Complex(x: Double, y: Double) extends XY {
 
 object Complex {
 
-  val unit: Complex = unit(1.0d)
+  val realUnit: Complex = Complex(1.0, 0.0)
+
+  val imaginaryUnit: Complex = Complex(0.0, 1.0)
 
   val zero: Complex = Complex(0.0d, 0.0d)
 
-  def unit(arg: Double): Complex = modArg(1.0d, arg)
+  def unit(arg: Rad): Complex = modArg(1.0d, arg)
 
-  def modArg(mod: Double, arg: Double) = new Complex(mod * Math.cos(arg), mod * Math.sin(arg))
+  def modArg(mod: Double, arg: Rad) = new Complex(mod * Math.cos(arg), mod * Math.sin(arg))
 
 
 }

@@ -32,7 +32,7 @@ case class Vec private (rep: Complex) extends XY {
     }
   }
 
-  def angle(implicit epsilon: Epsilon): Double = rep.arg
+  def angle(implicit epsilon: Epsilon): Rad = rep.arg
 
   def add(other: Vec) = Vec(rep.add(other.rep))
 

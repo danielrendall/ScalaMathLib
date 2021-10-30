@@ -11,7 +11,7 @@ case class Circle(center: Point, radius: Double, startAngle: Rad = Rad.ZERO) ext
     Circle(center.rotate(angle, about), radius, startAngle + angle)
 
   override def evaluate(parameter: Double): Point = {
-    val angle: Double = startAngle + (parameter * Rad.TWO_PI)
+    val angle: Rad = startAngle + (Rad.TWO_PI * parameter)
     Point(center.rep.add((Complex.modArg(radius, angle))))
   }
 
