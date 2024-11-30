@@ -74,6 +74,8 @@ object Vec {
 
   def apply(from: Point, to: Point): Vec = Vec(to.rep.sub(from.rep))
 
+  def modArg(mod: Double, arg: Rad): Vec = Vec(Complex.modArg(mod, arg))
+
   val ZERO: Vec = Vec(0.0d, 0.0d)
 
   val I: Vec = Vec(1.0d, 0.0d)
